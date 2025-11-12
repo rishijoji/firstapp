@@ -24,6 +24,8 @@ MODEL_OPTIONS = [
 
 def ensure_config():
     load_dotenv()
+    # Avoid attempts to contact GCE metadata server when running off-GCP
+    os.environ.setdefault("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "googleapis.com")
     api_key = os.getenv("GOOGLE_API_KEY", "")
     index_dir = os.getenv("RAG_INDEX_DIR", ".rag")
     if not api_key:
